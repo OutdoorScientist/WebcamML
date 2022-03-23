@@ -1,0 +1,2 @@
+Hey guys to run the webapp type 'python manage.py runserver' in terminal
+after downloading requirements.txt.

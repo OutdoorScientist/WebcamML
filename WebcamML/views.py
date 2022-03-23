@@ -10,6 +10,9 @@ from django.http import StreamingHttpResponse
 import cv2
 import threading
 
+import cv2
+from FacialDetectionDots import detect_face_pos
+
 
 # Create your views here.
 
@@ -26,8 +29,10 @@ def homepage_view (request,*args, **kwargs):
     if request.POST:
         cam = VideoCamera()
         user_pic = cam.get_pic()
-        cv2.imwrite('color_img02.jpg', user_pic)
-        print(user_pic)
+        # currently has to write pic and then run ML
+        # update to just run ML on incoming pic
+        cv2.imwrite('color_img03.jpg', user_pic)
+        detect_face_pos('color_img03.jpg')
 
     print("my_new_title:",my_new_title)
     # if form.is_valid():
