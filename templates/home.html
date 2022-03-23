@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<h1>Hello World</h1>
+<p>this is temp </p>
+
+<form method="POST"> {%  csrf_token%}
+{#    {{ form.as_p }}#}
+    <input type="text" name = 'title_of_posted_info' placeholder="TempPlaceHolder"/>
+
+    <input type="submit"  value='Check Camera Feed'/>
+</form>
+
+{{ request.user }}
+
+<body>
+<h1>Video Stream</h1>
+<img src="{%  url 'webcam_feed' %}">
+</body>
+</html>
