@@ -32,15 +32,16 @@ def homepage_view (request,*args, **kwargs):
         # currently has to write pic and then run ML
         # update to just run ML on incoming pic
         cv2.imwrite('color_img03.jpg', user_pic)
-        detect_face_pos('color_img03.jpg')
+        result = detect_face_pos('color_img03.jpg')
+        print("Got the result", result)
+        context = {'result': result}
+    else:
+        context = {}
 
     print("my_new_title:",my_new_title)
     # if form.is_valid():
     #     form.save()
     #     form = WebcamPicForm()
-    context = {
-        # 'form':form
-    }
 
     return render(request, "home.html", context)
 
@@ -62,8 +63,8 @@ def webcam_feed(request,*args, **kwargs):
 
 class VideoCamera(object):
     def __init__(self):
-        self.video = cv2.VideoCapture(0)
-        (self.grabbed, self.frame) = self.video.read(0)
+        self.video = cv2.VideoCapture(2)
+        (self.grabbed, self.frame) = self.video.read(2)
         threading.Thread(target=self.update, args=()).start()
 
     def __del__(self):
@@ -89,4 +90,3 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-

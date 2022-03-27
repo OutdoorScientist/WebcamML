@@ -45,10 +45,11 @@ def detect_face_pos(filename):
     if len(faces)==0:
         #no face detected
         print('legnth of bbboxes is 0', len(faces))
-        print('No faces found')
+        return ('No faces detected; Check your camera feed and camera view')
     elif(len(faces) >1):
         #more than one face
         print("too many faces in scene")
+        return("Detecting more than one face")
     else:
         # display faces on the original image
         print("faces[0]['box']",faces[0]['box'])
@@ -60,8 +61,8 @@ def detect_face_pos(filename):
         # print('dimensions',dimensions)
 
         #current bug in which x&y dimensions flipped
-        x_safe_zone_pieces = image01.shape[1]/8
-        y_safe_zone_pieces = image01.shape[0]/8
+        x_safe_zone_pieces = image01.shape[1]/4
+        y_safe_zone_pieces = image01.shape[0]/4
 
         face_left_pos_hor = faces[0]['box'][0]
         face_right_pos_hor = faces[0]['box'][0] + faces[0]['box'][2]
@@ -70,22 +71,25 @@ def detect_face_pos(filename):
         face_bottom_pos_ver = faces[0]['box'][1] + faces[0]['box'][3]
 
         print('type of face_bottom_pos_ver',(type(face_bottom_pos_ver)))
-        if face_right_pos_hor > (x_safe_zone_pieces*7):
-            print('image01.shape[0]',image01.shape)
-            print('face_right_pos_hor:',face_right_pos_hor)
-            print('x_safe_zone_pieces*7:',x_safe_zone_pieces*7)
+        if face_right_pos_hor > (x_safe_zone_pieces*3):
+            # print('image01.shape[0]',image01.shape)
+            # print('face_right_pos_hor:',face_right_pos_hor)
+            # print('x_safe_zone_pieces*7:',x_safe_zone_pieces*7)
             print('Move camera left')
+            return ('Recommendation - Move camera left')
 
         elif face_left_pos_hor < (x_safe_zone_pieces*1):
             print('Move camera Right')
-
+            return('Recommendation - Move camera right')
         elif face_top_pos_ver < (y_safe_zone_pieces*1):
             print('Move camera up')
-
-        elif face_bottom_pos_ver > (y_safe_zone_pieces*7):
+            return('Recommendation - Move camera up')
+        elif face_bottom_pos_ver > (y_safe_zone_pieces*3):
             print('Move camera down')
+            return ('Recommendation - Move camera down')
         else:
             print("picture good")
+            return('Good')
 
         # draw_image_with_boxes(filename, faces)
         # quit()

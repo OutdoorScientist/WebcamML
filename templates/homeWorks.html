@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html lang="en">
+  <head>
+      {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Encode+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/2e7df1c6d0.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Webcam Adjustment Recommender</title>
+    <meta
+      name="description"
+      content="Web application to assist people with directions to adjust their web camera"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="stylesheet" href = "{% static '/index.css'%}" >
+
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <header>
+      <i title="camera icon" class="fa-solid fa-camera"></i>
+      <h1 id="webpage-title">Webcam Adjustment Recommender</h1>
+    </header>
+
+    <section id="feedback-section">
+      <div id="camera-feedback-container">put camera feed here</div>
+      <button
+        title="recommendations button"
+        type="submit"
+        value="Check Camera Feed"
+        id="get-recs"
+      >
+        Get Recommendations
+      </button>
+    </section>
+
+    <section id="recommendations-section">
+      <div id="recommendations-container">
+        <div class="recommendation">
+          <p class="rec-text">
+            Example Recommendation: Move camera slightly up
+          </p>
+          <button title="play button" class="rec-button">
+            <i class="fa-solid fa-play"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="" async defer></script>
+  </body>
+</html>

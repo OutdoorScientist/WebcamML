@@ -23,5 +23,4 @@ urlpatterns = [
     path('',views.homepage_view, name='home'),
     path('webcam_feed',views.webcam_feed, name='webcam_feed'),
     path('screenshot/',views.screenshot_view, name='screenshot'),
-
 ]

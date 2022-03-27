@@ -1,0 +1,106 @@
+body {
+  background-color: rgb(214, 214, 214);
+  font-family: "Encode Sans", sans-serif;
+  color: rgb(19, 19, 19);
+}
+
+header {
+  margin-top: 2vmin;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+header i {
+  font-size: 2rem;
+  padding-right: 2vmin;
+}
+
+#feedback-section {
+  margin-top: 2vmin;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#camera-feedback-container {
+  width: 75vmin;
+  height: 50vmin;
+  border: 3px rgb(19, 19, 19) solid;
+  border-radius: 5px;
+}
+
+#get-recs {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+
+  margin: 2vmin;
+  padding: 2vmin;
+  border-radius: 25px;
+  background-color: rgb(182, 182, 182);
+}
+
+#recommendations-section {
+  margin-top: 2vmin;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.recommendation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1vmin;
+  margin: 1vmin;
+  border-radius: 5px;
+  background-color: rgb(243, 23, 23);
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+}
+
+.recommendationSuccess {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1vmin;
+  margin: 1vmin;
+  border-radius: 5px;
+  background-color: rgb(23, 255, 23);
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+}
+
+.rec-button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+
+  margin-left: 2vmin;
+  border-radius: 200px;
+  width: 5vmin;
+  height: 5vmin;
+  background-color: rgb(182, 182, 182);
+}
+
+.image01 {
+  resize: both;
+  width:25px;
+  height:25px;
+  background-color: rgb(0, 0, 182);
+}
