@@ -104,3 +104,9 @@ header i {
   height:25px;
   background-color: rgb(0, 0, 182);
 }
+
+.about {
+  text-align: center;
+  width: 60%;
+  margin: auto;
+}
