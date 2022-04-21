@@ -111,35 +111,36 @@
 {##}
 {#        {% endif %}#}
 
-    {% for key,value in rec_dic.items %}
-        <section id="recommendations-section">
-              <div id="recommendations-container">
-                  {% if key == "good" %}
-                      <div class="recommendationSuccess">
-                        <p class="rec-text">
-                        Great Camera Feed!
-                        </p>
 
-                        <audio controls>
-                        <source src="{% static '/Down.mp3'%}" type="audio/mpeg">
-                         Your browser does not support the audio element.
-                        </audio>
-                      </div>
-                  {% else %}
-                        <div class="recommendation">
-                        <p class="rec-text">
-                        {{ value }}
-                        </p>
+    <section id="recommendations-section">
+        {% for key,value in rec_dic.items %}
+          <div id="recommendations-container">
+              {% if key == "good" %}
+                  <div class="recommendationSuccess">
+                    <p class="rec-text">
+                    Great Camera Feed!
+                    </p>
 
-                        <audio controls>
-                        <source src="{% static '/'%}{{ value }}.mp3" type="audio/mpeg">#}
-                        Your browser does not support the audio element.
-                        </audio>
-                        </div>
-                  {% endif %}
-              </div>
-        </section>
-    {% endfor %}
+                    <audio controls>
+                    <source src="{% static '/Down.mp3'%}" type="audio/mpeg">
+                     Your browser does not support the audio element.
+                    </audio>
+                  </div>
+              {% else %}
+                    <div class="recommendation">
+                    <p class="rec-text">
+                    {{ value }}
+                    </p>
+
+                    <audio controls>
+                    <source src="{% static '/'%}{{ value }}.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                    </audio>
+                    </div>
+              {% endif %}
+          </div>
+        {% endfor %}
+    </section>
 
     <script src="" async defer></script>
   </body>
