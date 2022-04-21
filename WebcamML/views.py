@@ -34,7 +34,10 @@ def homepage_view (request,*args, **kwargs):
         cv2.imwrite('color_img03.jpg', user_pic)
         result = detect_face_pos('color_img03.jpg')
         print("Got the result", result)
-        context = {'result': result}
+        #context = {'result': result}
+        print('type :',type(result))
+        context = {}
+        context["rec_dic"] = result
     else:
         context = {}
 

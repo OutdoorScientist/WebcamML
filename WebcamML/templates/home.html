@@ -75,47 +75,72 @@
 
     </section>
 
-    {% if result != None %}
-        {% if result == 'Good' %}
-            <section id="recommendations-section">
-              <div id="recommendations-container">
-                <div class="recommendationSuccess">
-                  <p class="rec-text">
-                      Great Camera Feed!
-                  </p>
-                  <audio controls>
-                      <source src="{% static '/Down.mp3'%}" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                  </audio>
-                </div>
-              </div>
-            </section>
-        {% else %}
-            <section id="recommendations-section">
-              <div id="recommendations-container">
-                <div class="recommendation">
-                  <p class="rec-text">
-                      {{ result }}
-                  </p>
-
-                  <audio controls autoplay>
+{#    {% if result != None %}#}
+{#        {% if result == 'Good' %}#}
+{#            <section id="recommendations-section">#}
+{#              <div id="recommendations-container">#}
+{#                <div class="recommendationSuccess">#}
+{#                  <p class="rec-text">#}
+{#                      Great Camera Feed!#}
+{#                  </p>#}
+{#                  <audio controls>#}
+{#                      <source src="{% static '/Down.mp3'%}" type="audio/mpeg">#}
+{#                      Your browser does not support the audio element.#}
+{#                  </audio>#}
+{#                </div>#}
+{#              </div>#}
+{#            </section>#}
+{#        {% else %}#}
+{#            <section id="recommendations-section">#}
+{#              <div id="recommendations-container">#}
+{#                <div class="recommendation">#}
+{#                  <p class="rec-text">#}
+{#                      {{ result }}#}
+{#                  </p>#}
+{##}
+{#                  <audio controls autoplay>#}
 {#                      <source src="{% static '/Down.mp3'%}" type="audio/mpeg">#}
 {#                      <source src="/static/Recommendation - Move camera up.mp3" type="audio/mpeg">#}
-                      <source src="{% static '/'%}{{ result }}.mp3" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                  </audio>
+{#                      <source src="{% static '/'%}{{ result }}.mp3" type="audio/mpeg">#}
+{#                      Your browser does not support the audio element.#}
+{#                  </audio>#}
+{##}
+{#                </div>#}
+{#              </div>#}
+{#            </section>#}
+{##}
+{#        {% endif %}#}
 
-                </div>
+    {% for key,value in rec_dic.items %}
+        <section id="recommendations-section">
+              <div id="recommendations-container">
+                  {% if key == "good" %}
+                      <div class="recommendationSuccess">
+                        <p class="rec-text">
+                        Great Camera Feed!
+                        </p>
+
+                        <audio controls>
+                        <source src="{% static '/Down.mp3'%}" type="audio/mpeg">
+                         Your browser does not support the audio element.
+                        </audio>
+                      </div>
+                  {% else %}
+                        <div class="recommendation">
+                        <p class="rec-text">
+                        {{ value }}
+                        </p>
+
+                        <audio controls>
+                        <source src="{% static '/'%}{{ value }}.mp3" type="audio/mpeg">#}
+                        Your browser does not support the audio element.
+                        </audio>
+                        </div>
+                  {% endif %}
               </div>
-            </section>
+        </section>
+    {% endfor %}
 
-        {% endif %}
-
-    <h>{{ result }}</h>
-        <br>
-{#        <h>{% static '/'%}+{{ result }}+.mp3</h>#}
-        <h>{% static '/'%}{{ result }}.mp3</h>
-    {% endif %}
     <script src="" async defer></script>
   </body>
 </html>

@@ -41,15 +41,20 @@ def detect_face_pos(filename):
     detector = MTCNN()
     # detect faces in the image
     faces = detector.detect_faces(pixels)
+    context_dic ={}
 
     if len(faces)==0:
         #no face detected
         print('legnth of bbboxes is 0', len(faces))
-        return ('No faces detected; Check your camera feed and camera view')
+        context_dic["noface"] = "No faces detected; Check your camera feed and camera view"
+        #return ('No faces detected; Check your camera feed and camera view')
+        return context_dic
     elif(len(faces) >1):
         #more than one face
         print("too many faces in scene")
-        return("Detecting more than one face")
+        context_dic["faces"] = "Detecting more than one face"
+        #return("Detecting more than one face")
+        return context_dic
     else:
         # display faces on the original image
         print("faces[0]['box']",faces[0]['box'])
@@ -76,24 +81,29 @@ def detect_face_pos(filename):
             # print('face_right_pos_hor:',face_right_pos_hor)
             # print('x_safe_zone_pieces*7:',x_safe_zone_pieces*7)
             print('Move camera left')
-            return ('Recommendation - Move camera left')
+            context_dic["left"]= "Recommendation - Move camera left"
+            #return ('Recommendation - Move camera left')
 
-        elif face_left_pos_hor < (x_safe_zone_pieces*1):
+        if face_left_pos_hor < (x_safe_zone_pieces*1):
             print('Move camera Right')
-            return('Recommendation - Move camera right')
-        elif face_top_pos_ver < (y_safe_zone_pieces*1):
+            context_dic["right"]= "Recommendation - Move camera right"
+            #return('Recommendation - Move camera right')
+        if face_top_pos_ver < (y_safe_zone_pieces*1):
             print('Move camera up')
-            return('Recommendation - Move camera up')
-        elif face_bottom_pos_ver > (y_safe_zone_pieces*3):
+            context_dic["up"] = "Recommendation - Move camera up"
+            #return('Recommendation - Move camera up')
+        if face_bottom_pos_ver > (y_safe_zone_pieces*3):
             print('Move camera down')
-            return ('Recommendation - Move camera down')
-        else:
+            context_dic["down"]= "Recommendation - Move camera down"
+            #return ('Recommendation - Move camera down')
+        if len(context_dic) ==0:
             print("picture good")
-            return('Good')
-
+            context_dic["good"] = "Good"
+            #return('Good')
+        return context_dic
         # draw_image_with_boxes(filename, faces)
         # quit()
-
+    print("Got to far Nathaniel **Check this")
 # to do
 # - Check for orientation of head
 # - Check for center of head in camera view
