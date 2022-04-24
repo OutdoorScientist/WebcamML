@@ -39,9 +39,51 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
+
+
+    <div>
+      <button
+        title="light &  dark mode button"
+        id="light-dark"
+        onclick="change()"
+      >
+        <i
+          title="light-dark mode icon"
+          id="light-dark-icon"
+          class="fa-solid fa-sun"
+        ></i>
+      </button>
+    </div>
+
+    <div>
+      <button
+        title="About information toggle"
+        id="about-button"
+        onclick="changeAbout()"
+      >
+        <i
+          title="question mark icon"
+          id="question-mark-icon"
+          class="fa-solid fa-question"
+        ></i>
+      </button>
+    </div>
+
+    <section title="about" class="about-sec" id="about-sec">
+      <p id="about-body">
+        This website is meant to serve as a virtual assistant that will provide
+        blind and visually impaired people with instuctions on how to correctly
+        position their webcam.
+      </p>
+    </section>
+
+
     <header>
-      <i title="camera icon" class="fa-solid fa-camera"></i>
+        <i title="camera icon" class="fa-solid fa-camera" alt="camera lens icon"></i>
+{#      <img src="./assets/diaphragm.png" alt="camera lens icon" />#}
       <h1 id="webpage-title">Webcam Adjustment Recommender</h1>
+{#      <img src="./assets/diaphragm.png" alt="camera lens icon" />#}
+        <i title="camera icon" class="fa-solid fa-camera" alt="camera lens icon"></i>
     </header>
 
     <div class="about">
@@ -50,11 +92,11 @@
         of everyday life. This newfound webcam importance has highlighted an important issue those with visual impairments face.
          Webcams are an entirely visually focused media and have no way of providing feedback besides visually.
          We are here to accomadate that issue by providing auditory cues to center a users face in the webcam such as "move up",
-          "move down", "move left" and "move right". This will enable those who typically do not benefit from webcams to use them for things such as 
+          "move down", "move left" and "move right". This will enable those who typically do not benefit from webcams to use them for things such as
         video calls with family, remote work, and any teleconferencing needs. </p>
     </div>
 
-
+    <br>
     <section id="feedback-section">
       <div >
           <img src="{%  url 'webcam_feed' %}"
@@ -75,47 +117,68 @@
 
     </section>
 
-    {% if result != None %}
-        {% if result == 'Good' %}
-            <section id="recommendations-section">
-              <div id="recommendations-container">
-                <div class="recommendationSuccess">
-                  <p class="rec-text">
-                      Great Camera Feed!
-                  </p>
-                  <audio controls>
-                      <source src="{% static '/Down.mp3'%}" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                  </audio>
-                </div>
-              </div>
-            </section>
-        {% else %}
-            <section id="recommendations-section">
-              <div id="recommendations-container">
-                <div class="recommendation">
-                  <p class="rec-text">
-                      {{ result }}
-                  </p>
+    <section id="recommendations-section">
+        {% for key,value in rec_dic.items %}
+          <div id="recommendations-container">
+              {% if key == "good" %}
+                  <div class="recommendation">
+                    <p class="rec-text">
+                    Great Camera Feed!
+                    </p>
 
-                  <audio controls autoplay>
-{#                      <source src="{% static '/Down.mp3'%}" type="audio/mpeg">#}
-{#                      <source src="/static/Recommendation - Move camera up.mp3" type="audio/mpeg">#}
-                      <source src="{% static '/'%}{{ result }}.mp3" type="audio/mpeg">
-                      Your browser does not support the audio element.
-                  </audio>
+                    <audio controls preload="auto" autoplay>
+                    <source src="{% static '/You have a good video feed.mp3'%}" type="audio/mp3">
+                     Your browser does not support the audio element.
+                    </audio>
+                  </div>
+              {% else %}
+                    <div class="recommendation">
+                    <p class="rec-text">
+                    {{ value }}
+                    </p>
 
-                </div>
-              </div>
-            </section>
+                    <audio controls preload="auto" autoplay>
+                    <source src="{% static '/'%}{{ value }}.mp3" type="audio/mp3">
+                    Your browser does not support the audio element.
+                    </audio>
+                    </div>
+              {% endif %}
+          </div>
+        {% endfor %}
+    </section>
 
-        {% endif %}
-
-    <h>{{ result }}</h>
-        <br>
-{#        <h>{% static '/'%}+{{ result }}+.mp3</h>#}
-        <h>{% static '/'%}{{ result }}.mp3</h>
-    {% endif %}
     <script src="" async defer></script>
+    <script>
+      function change() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+        if (
+          document.getElementById("light-dark-icon").className ==
+          "fa-solid fa-sun"
+        ) {
+          document.getElementById("light-dark-icon").className =
+            "fa-solid fa-moon";
+          document.getElementById("light-dark-icon").style.color =
+            "rgb(230,230,230)";
+          document.getElementById("question-mark-icon").style.color =
+            "rgb(230,230,230)";
+        } else {
+          document.getElementById("light-dark-icon").className =
+            "fa-solid fa-sun";
+          document.getElementById("light-dark-icon").style.color =
+            "rgb(19,19,19)";
+          document.getElementById("question-mark-icon").style.color =
+            "rgb(19,19,19)";
+        }
+      }
+
+      function changeAbout() {
+        if (document.getElementById("about-sec").className == "about-sec") {
+          document.getElementById("about-sec").className = "about-sec2";
+        } else {
+          document.getElementById("about-sec").className = "about-sec";
+        }
+      }
+    </script>
   </body>
 </html>

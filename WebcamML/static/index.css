@@ -1,21 +1,65 @@
+html {
+  --color-1: #e3e3e3;
+  --color-2: #cccccc;
+  --color-3: #f3f3f3;
+  --color-4: #ffffff;
+  --color-5: #c1c1c1;
+  --color-5: #b3b3b3;
+  --color-6: #b8b8b8;
+
+  height: 100%;
+  /*margin: auto;*/
+  width: 760px;
+  z-index: 10;
+  /*height: 900px;*/
+}
+
+.dark-mode {
+  --color-1: #3d3d3d;
+  --color-2: #373737;
+  --color-3: #414141;
+  --color-4: #464646;
+  --color-5: #343434;
+  --color-6: #343434;
+  --color-7: rgb(230, 230, 230);
+}
+
 body {
-  background-color: rgb(214, 214, 214);
-  font-family: "Encode Sans", sans-serif;
-  color: rgb(19, 19, 19);
+  --color-1: #e3e3e3;
+  --color-2: #cccccc;
+  --color-3: #f3f3f3;
+  --color-4: #ffffff;
+  --color-5: #b3b3b3;
+  --color-6: #b8b8b8;
+  --color-7: rgb(19, 19, 19);
+  background-color: var(--color-1);
+  font-family: "Yantramanav", sans-serif;
+  color: var(--color-7);
+  width: 100vmax;
+  overflow: hidden;
 }
 
 header {
   margin-top: 2vmin;
-  width: 100%;
+  width: min-content;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
-header i {
+h1 {
   font-size: 2rem;
-  padding-right: 2vmin;
+}
+
+header img {
+  width: 2.5rem;
+  padding: 2vmin;
 }
 
 #feedback-section {
@@ -30,23 +74,42 @@ header i {
 #camera-feedback-container {
   width: 75vmin;
   height: 50vmin;
-  border: 3px rgb(19, 19, 19) solid;
-  border-radius: 5px;
+  border-radius: 38px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: var(--color-1);
+  box-shadow: 14px 14px 28px var(--color-6), -14px -14px 28px var(--color-4);
+
+  min-width: 50%;
+  max-width: 80%;
+
+  max-height: 80%;
+  display: block;
 }
 
 #get-recs {
-  background: none;
+  display: inline-block;
   color: inherit;
-  border: none;
   padding: 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
-
   margin: 2vmin;
+  margin-top: 5vmin;
   padding: 2vmin;
-  border-radius: 25px;
-  background-color: rgb(182, 182, 182);
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  border-radius: 86px;
+  background: linear-gradient(145deg, var(--color-3), var(--color-2));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#get-recs:hover {
+  border: 1px rgba(255, 40, 40, 0.5) solid;
+}
+
+#get-recs:active {
+  border-radius: 86px;
+  background: linear-gradient(145deg, var(--color-2), var(--color-3));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
 }
 
 #recommendations-section {
@@ -65,19 +128,9 @@ header i {
   padding: 1vmin;
   margin: 1vmin;
   border-radius: 5px;
-  background-color: rgb(243, 23, 23);
-  padding-left: 3vmin;
-  padding-right: 3vmin;
-}
-
-.recommendationSuccess {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1vmin;
-  margin: 1vmin;
-  border-radius: 5px;
-  background-color: rgb(23, 255, 23);
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: var(--color-1);
+  box-shadow: 14px 14px 28px var(--color-6), -14px -14px 28px var(--color-4);
   padding-left: 3vmin;
   padding-right: 3vmin;
 }
@@ -90,23 +143,121 @@ header i {
   font: inherit;
   cursor: pointer;
   outline: inherit;
-
   margin-left: 2vmin;
   border-radius: 200px;
   width: 5vmin;
   height: 5vmin;
-  background-color: rgb(182, 182, 182);
+  border-radius: 86px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: linear-gradient(145deg, var(--color-3), var(--color-2));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
 }
 
-.image01 {
-  resize: both;
-  width:25px;
-  height:25px;
-  background-color: rgb(0, 0, 182);
+.rec-button:hover {
+  border: 1px rgba(255, 40, 40, 0.5) solid;
 }
 
-.about {
-  text-align: center;
-  width: 60%;
-  margin: auto;
+.rec-button:active {
+  border-radius: 86px;
+  background: linear-gradient(145deg, var(--color-2), var(--color-3));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#light-dark {
+  position: absolute;
+  top: 4vmin;
+  left: 4vmin;
+  z-index: 999;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 5px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 200px;
+  width: 6vmin;
+  height: 6vmin;
+  border-radius: 86px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: linear-gradient(145deg, var(--color-3), var(--color-2));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#light-dark i {
+  font-size: 1.5rem;
+}
+
+#light-dark:hover {
+  border: 1px rgba(255, 40, 40, 0.5) solid;
+}
+
+#light-dark:active {
+  border-radius: 86px;
+  background: linear-gradient(145deg, var(--color-2), var(--color-3));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#about-button {
+  position: absolute;
+  top: 4vmin;
+  right: 4vmin;
+  z-index: 999;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 5px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 200px;
+  width: 6vmin;
+  height: 6vmin;
+  border-radius: 86px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: linear-gradient(145deg, var(--color-3), var(--color-2));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#about-button:hover {
+  border: 1px rgba(255, 40, 40, 0.5) solid;
+}
+
+#about-button:active {
+  border-radius: 86px;
+  background: linear-gradient(145deg, var(--color-2), var(--color-3));
+  box-shadow: 11px 11px 51px var(--color-5), -11px -11px 51px var(--color-4);
+}
+
+#about-button i {
+  font-size: 1.5rem;
+}
+
+.about-sec {
+  visibility: hidden;
+}
+
+.about-sec2 {
+  visibility: inherit;
+}
+
+#about-sec {
+  position: absolute;
+  top: 14vmin;
+  right: 4vmin;
+  width: 35vmin;
+  z-index: 999;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-radius: 5px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  background: var(--color-1);
+  box-shadow: 14px 14px 28px var(--color-6), -14px -14px 28px var(--color-4);
+}
+
+.div{
+  width: 100px;
+  min-width: 50%;
+  max-width: 100%;
 }

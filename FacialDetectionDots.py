@@ -1,5 +1,6 @@
 #source: https://machinelearningmastery.com/how-to-perform-face-detection-with-classical-and-deep-learning-methods-in-python-with-keras/
 # face detection with mtcnn on a photograph
+
 from matplotlib import pyplot
 from matplotlib.patches import Rectangle
 from matplotlib.patches import Circle
@@ -7,7 +8,10 @@ from mtcnn.mtcnn import MTCNN
 
 import cv2
 from numpy import asarray
-from PIL import Image
+## for brightness
+import math
+from PIL import Image, ImageStat
+##
 
 # draw an image with detected objects
 def draw_image_with_boxes(filename, result_list):
@@ -33,9 +37,7 @@ def draw_image_with_boxes(filename, result_list):
     # show the plot
     pyplot.show()
 
-# filename = 'color_img02.JPG'
-
-def detect_face_pos(filename):
+def detect_face_pos(filename,context_dic):
     pixels = pyplot.imread(filename)
     # create the detector, using default weights
     detector = MTCNN()
@@ -45,11 +47,13 @@ def detect_face_pos(filename):
     if len(faces)==0:
         #no face detected
         print('legnth of bbboxes is 0', len(faces))
-        return ('No faces detected; Check your camera feed and camera view')
+        context_dic["noface"] = "No faces detected; Check your camera feed and camera view"
+        return context_dic
     elif(len(faces) >1):
         #more than one face
         print("too many faces in scene")
-        return("Detecting more than one face")
+        context_dic["faces"] = "More than one face in view, analysis failed"
+        return context_dic
     else:
         # display faces on the original image
         print("faces[0]['box']",faces[0]['box'])
@@ -61,8 +65,8 @@ def detect_face_pos(filename):
         # print('dimensions',dimensions)
 
         #current bug in which x&y dimensions flipped
-        x_safe_zone_pieces = image01.shape[1]/4
-        y_safe_zone_pieces = image01.shape[0]/4
+        x_safe_zone_pieces = image01.shape[1]/6
+        y_safe_zone_pieces = image01.shape[0]/6
 
         face_left_pos_hor = faces[0]['box'][0]
         face_right_pos_hor = faces[0]['box'][0] + faces[0]['box'][2]
@@ -71,30 +75,83 @@ def detect_face_pos(filename):
         face_bottom_pos_ver = faces[0]['box'][1] + faces[0]['box'][3]
 
         print('type of face_bottom_pos_ver',(type(face_bottom_pos_ver)))
-        if face_right_pos_hor > (x_safe_zone_pieces*3):
+        if face_right_pos_hor > (x_safe_zone_pieces*5):
             # print('image01.shape[0]',image01.shape)
             # print('face_right_pos_hor:',face_right_pos_hor)
             # print('x_safe_zone_pieces*7:',x_safe_zone_pieces*7)
             print('Move camera left')
-            return ('Recommendation - Move camera left')
+            context_dic["left"]= "Recommendation - Move camera left"
+            #return ('Recommendation - Move camera left')
 
-        elif face_left_pos_hor < (x_safe_zone_pieces*1):
+        if face_left_pos_hor < (x_safe_zone_pieces*1):
             print('Move camera Right')
-            return('Recommendation - Move camera right')
-        elif face_top_pos_ver < (y_safe_zone_pieces*1):
+            context_dic["right"]= "Recommendation - Move camera right"
+            #return('Recommendation - Move camera right')
+        if face_top_pos_ver < (y_safe_zone_pieces*1):
             print('Move camera up')
-            return('Recommendation - Move camera up')
-        elif face_bottom_pos_ver > (y_safe_zone_pieces*3):
+            context_dic["up"] = "Recommendation - Move camera up"
+            #return('Recommendation - Move camera up')
+        if face_bottom_pos_ver > (y_safe_zone_pieces*5):
             print('Move camera down')
-            return ('Recommendation - Move camera down')
-        else:
-            print("picture good")
-            return('Good')
+            context_dic["down"]= "Recommendation - Move camera down"
+            #return ('Recommendation - Move camera down')
 
+        context_dic = camera_rotation(faces,context_dic)
+
+        return context_dic
         # draw_image_with_boxes(filename, faces)
-        # quit()
 
-# to do
-# - Check for orientation of head
-# - Check for center of head in camera view
-# - chek for brightness
+
+def brightness( im_file , context_dic):
+    im = Image.open(im_file)
+    stat = ImageStat.Stat(im)
+    r,g,b = stat.mean
+    brightness = math.sqrt(0.241*(r**2) + 0.691*(g**2) + 0.068*(b**2))
+    print("brightness:",brightness)
+    if int(brightness) > 130:
+        context_dic["brightness"] = "Recommendation - Make your environment darker"
+    if int(brightness) < 60:
+        print("int brightness:",int(brightness))
+        print("been determined its to dark")
+        context_dic["brightness"] = "Recommendation - Make your environment brighter"
+    else:
+        pass
+    return context_dic
+
+def camera_rotation(faces,context_dic):
+
+    l_x = faces[0]['keypoints']['left_eye'][0]
+    l_y = faces[0]['keypoints']['left_eye'][1]
+    r_x = faces[0]['keypoints']['right_eye'][0]
+    r_y = faces[0]['keypoints']['right_eye'][1]
+
+    degree_of_rotation = math.degrees(math.atan(abs((r_y - l_y)) / (r_x - l_x)))
+    print("degree_of_rotation",degree_of_rotation)
+    # if abs((l_y - r_y)) > 30:
+    if degree_of_rotation > 25:
+        if (r_y > l_y):
+            print("degree_of_rotation", degree_of_rotation)
+            print("rotate clockwise")
+            context_dic["rotate"] = "Recommendation - Rotate your camera counter-clockwise"
+        if (l_y > r_y):
+            print("degree_of_rotation", degree_of_rotation)
+            print("counter clockwise")
+            context_dic["rotate"] = "Recommendation - Rotate your camera clockwise"
+
+    return context_dic
+
+def analyzePhoto(file):
+    context_dic = {}
+    context_dic = detect_face_pos(file,context_dic)
+    print("context_dic:",context_dic)
+    if "noface" in context_dic:
+        return context_dic
+    elif "faces" in context_dic:
+        return context_dic
+    else:
+        brightness(file, context_dic)
+
+    if len(context_dic) == 0:
+        print("picture good")
+        context_dic["good"] = "You have a good video feed"
+    return context_dic

@@ -11,7 +11,7 @@ import cv2
 import threading
 
 import cv2
-from FacialDetectionDots import detect_face_pos
+from FacialDetectionDots import analyzePhoto
 
 
 # Create your views here.
@@ -32,9 +32,13 @@ def homepage_view (request,*args, **kwargs):
         # currently has to write pic and then run ML
         # update to just run ML on incoming pic
         cv2.imwrite('color_img03.jpg', user_pic)
-        result = detect_face_pos('color_img03.jpg')
+        result = analyzePhoto('color_img03.jpg')
+
         print("Got the result", result)
-        context = {'result': result}
+        #context = {'result': result}
+        print('type :',type(result))
+        context = {}
+        context["rec_dic"] = result
     else:
         context = {}
 
