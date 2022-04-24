@@ -67,8 +67,8 @@ def webcam_feed(request,*args, **kwargs):
 
 class VideoCamera(object):
     def __init__(self):
-        self.video = cv2.VideoCapture(2)
-        (self.grabbed, self.frame) = self.video.read(2)
+        self.video = cv2.VideoCapture(0)
+        (self.grabbed, self.frame) = self.video.read(0)
         threading.Thread(target=self.update, args=()).start()
 
     def __del__(self):
