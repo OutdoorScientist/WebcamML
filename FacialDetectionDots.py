@@ -37,8 +37,6 @@ def draw_image_with_boxes(filename, result_list):
     # show the plot
     pyplot.show()
 
-# filename = 'color_img02.JPG'
-
 def detect_face_pos(filename,context_dic):
     pixels = pyplot.imread(filename)
     # create the detector, using default weights
@@ -50,13 +48,11 @@ def detect_face_pos(filename,context_dic):
         #no face detected
         print('legnth of bbboxes is 0', len(faces))
         context_dic["noface"] = "No faces detected; Check your camera feed and camera view"
-        #return ('No faces detected; Check your camera feed and camera view')
         return context_dic
     elif(len(faces) >1):
         #more than one face
         print("too many faces in scene")
-        context_dic["faces"] = "Detecting more than one face"
-        #return("Detecting more than one face")
+        context_dic["faces"] = "More than one face in view, analysis failed"
         return context_dic
     else:
         # display faces on the original image
@@ -69,8 +65,8 @@ def detect_face_pos(filename,context_dic):
         # print('dimensions',dimensions)
 
         #current bug in which x&y dimensions flipped
-        x_safe_zone_pieces = image01.shape[1]/4
-        y_safe_zone_pieces = image01.shape[0]/4
+        x_safe_zone_pieces = image01.shape[1]/6
+        y_safe_zone_pieces = image01.shape[0]/6
 
         face_left_pos_hor = faces[0]['box'][0]
         face_right_pos_hor = faces[0]['box'][0] + faces[0]['box'][2]
@@ -79,7 +75,7 @@ def detect_face_pos(filename,context_dic):
         face_bottom_pos_ver = faces[0]['box'][1] + faces[0]['box'][3]
 
         print('type of face_bottom_pos_ver',(type(face_bottom_pos_ver)))
-        if face_right_pos_hor > (x_safe_zone_pieces*3):
+        if face_right_pos_hor > (x_safe_zone_pieces*5):
             # print('image01.shape[0]',image01.shape)
             # print('face_right_pos_hor:',face_right_pos_hor)
             # print('x_safe_zone_pieces*7:',x_safe_zone_pieces*7)
@@ -95,7 +91,7 @@ def detect_face_pos(filename,context_dic):
             print('Move camera up')
             context_dic["up"] = "Recommendation - Move camera up"
             #return('Recommendation - Move camera up')
-        if face_bottom_pos_ver > (y_safe_zone_pieces*3):
+        if face_bottom_pos_ver > (y_safe_zone_pieces*5):
             print('Move camera down')
             context_dic["down"]= "Recommendation - Move camera down"
             #return ('Recommendation - Move camera down')
@@ -104,8 +100,7 @@ def detect_face_pos(filename,context_dic):
 
         return context_dic
         # draw_image_with_boxes(filename, faces)
-        # quit()
-    print("Got to far Nathaniel **Check this")
+
 
 def brightness( im_file , context_dic):
     im = Image.open(im_file)
@@ -114,11 +109,11 @@ def brightness( im_file , context_dic):
     brightness = math.sqrt(0.241*(r**2) + 0.691*(g**2) + 0.068*(b**2))
     print("brightness:",brightness)
     if int(brightness) > 130:
-        context_dic["brightness"] = "Recommendation - Make Environment Darker"
+        context_dic["brightness"] = "Recommendation - Make your environment darker"
     if int(brightness) < 60:
         print("int brightness:",int(brightness))
         print("been determined its to dark")
-        context_dic["brightness"] = "Recommendation - Make Environment Brighter"
+        context_dic["brightness"] = "Recommendation - Make your environment brighter"
     else:
         pass
     return context_dic
@@ -136,12 +131,12 @@ def camera_rotation(faces,context_dic):
     if degree_of_rotation > 25:
         if (r_y > l_y):
             print("degree_of_rotation", degree_of_rotation)
-            print("counter clockwise")
-            context_dic["rotate"] = "Recommendation - Rotate your camera clockwise"
-        if (l_y > r_y):
-            print("degree_of_rotation", degree_of_rotation)
             print("rotate clockwise")
             context_dic["rotate"] = "Recommendation - Rotate your camera counter-clockwise"
+        if (l_y > r_y):
+            print("degree_of_rotation", degree_of_rotation)
+            print("counter clockwise")
+            context_dic["rotate"] = "Recommendation - Rotate your camera clockwise"
 
     return context_dic
 
@@ -158,9 +153,5 @@ def analyzePhoto(file):
 
     if len(context_dic) == 0:
         print("picture good")
-        context_dic["good"] = "Good"
+        context_dic["good"] = "You have a good video feed"
     return context_dic
-
-# to do
-#     - need to get detected more than one face
-#       - great camera feed.
