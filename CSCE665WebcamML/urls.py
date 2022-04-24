@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 
 from WebcamML import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,3 +26,5 @@ urlpatterns = [
     path('webcam_feed',views.webcam_feed, name='webcam_feed'),
     path('screenshot/',views.screenshot_view, name='screenshot'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
